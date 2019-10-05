@@ -1,0 +1,54 @@
+<ion-view view-title="CONTACTS">
+    <ion-nav-title>
+        <img class="title-image" src="img/logo.png" />
+    </ion-nav-title>
+    <ion-content padding="10">
+        <h3 class="text-center">Contacts</h2>
+            <form method="post" class="invtform" ng-submit="" name="postForm" novalidate>
+                <!--ng-repeat="item in items"--> 
+                <div class="contact-table" style="max-height:{{height}}px; width:100% !important;">
+                    <div class="row header">
+                        <div class="Import_Contact_name_head" style="width:35% !important;">Label</div>
+                        <div class="Import_Contact_email_head" style="width:35% !important;">Email</div>
+                        <div class="Import_Contact_group_head">Group</div>
+                        <div class="Import_Contact_radio_head"></div>
+                    </div>
+                    <div ng-repeat="data in contacts" style="width:100% !important;">
+                        <div class="row " on-hold='editInvitation(data.inv_id)'>
+                            <div class="Import_Contact_name_list" style="width:35% !important;">
+                            
+                            <div style="width:20% !important; float:left;">
+                            <div class="checkboxFour">
+                                    <input type="checkbox" ng-true-value="{{data.inv_u_id !== userId && data.inv_u_id ||  data.inv_rec_u_id}}" ng-false-value="" id="checkboxFourInput{{data.inv_id}}" ng-model="user[$index]" name="userid[]" />
+                                    <label for="checkboxFourInput{{data.inv_id}}"></label>
+                                </div>
+                                </div>
+                                
+                            <div style="float:right; width:70% !important; margin-left:5%;"> &nbsp;&nbsp;
+                            {{data.inv_u_id === userId ? data.inv_r_name : data.inv_name}}
+                            </div>
+                            </div>
+                            <div class="Import_Contact_email_list" style="width:35% !important;">
+                            {{data.inv_u_id === userId ? data.rec_email : data.send_email}}
+                            </div>
+                            <div class="Import_Contact_group_list">
+                            {{data.inv_u_id === userId ? data.inv_group : data.inv_r_group}}
+                            </div>
+                            <div class="Import_Contact_radio_list">
+                                <button class="button button-small button-primary" ng-click="deleteContact(data.inv_id)" style="margin-left:10px;">X</button>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="padding"></div>
+                <h4 ng-hide="contacts.length > 0" class="text-center">No record Found. </h4>
+                <div class="padding onebtncss">
+                    <button type="submit" class="button button-block button-{{appColor}}" ng-click="sendMessage()"> Send </button>
+                </div>
+                <div class="padding onebtncss" style="display:none;">
+                    <button type="submit" class="button button-block button-dark"> Home </button>
+                </div>
+            </form>
+    </ion-content>
+</ion-view>

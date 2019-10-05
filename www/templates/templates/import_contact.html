@@ -1,0 +1,111 @@
+<ion-view view-title="IMPORT-CONTACT">
+    <ion-nav-title>
+        <img class="title-image" src="img/logo.png" />
+    </ion-nav-title>
+    <ion-content padding="10">
+        <h3 class="text-center">Import Contacts</h2>
+       <!-- <center>For edit please press hold contact.</center>-->
+            <form method="post" class="invtform" name="postForm" ng-submit="filtercontacts(searchopt,schopt)" novalidate >
+                <!--ng-repeat="item in items"--> 
+                <!--<div class="alph_main_div" style="display:none;">
+                <div class="alpha_div" id="A" ng-click="fetch_contact_by('A')">A</div>
+                <div class="alpha_div" id="B" ng-click="fetch_contact_by('B')">B</div>
+                <div class="alpha_div" id="C" ng-click="fetch_contact_by('C')">C</div>
+                <div class="alpha_div" id="D" ng-click="fetch_contact_by('D')">D</div>
+                <div class="alpha_div" id="E" ng-click="fetch_contact_by('E')">E</div>
+                <div class="alpha_div" id="F" ng-click="fetch_contact_by('F')">F</div>
+                <div class="alpha_div" id="G" ng-click="fetch_contact_by('G')">G</div>
+                <div class="alpha_div" id="H" ng-click="fetch_contact_by('H')">H</div>
+                <div class="alpha_div" id="I" ng-click="fetch_contact_by('I')">I</div>
+                <div class="alpha_div" id="J" ng-click="fetch_contact_by('J')">J</div>
+                <div class="alpha_div" id="K" ng-click="fetch_contact_by('K')">K</div>
+                <div class="alpha_div" id="L" ng-click="fetch_contact_by('L')">L</div>
+                <div class="alpha_div" id="M" ng-click="fetch_contact_by('M')">M</div>
+                <div class="alpha_div" id="N" ng-click="fetch_contact_by('N')">N</div>
+                <div class="alpha_div" id="O" ng-click="fetch_contact_by('O')">O</div>
+                <div class="alpha_div" id="P" ng-click="fetch_contact_by('P')">P</div>
+                <div class="alpha_div" id="Q" ng-click="fetch_contact_by('Q')">Q</div>
+                <div class="alpha_div" id="R" ng-click="fetch_contact_by('R')">R</div>
+                <div class="alpha_div" id="S" ng-click="fetch_contact_by('S')">S</div>
+                <div class="alpha_div" id="T" ng-click="fetch_contact_by('T')">T</div>
+                <div class="alpha_div" id="U" ng-click="fetch_contact_by('U')">U</div>
+                <div class="alpha_div" id="V" ng-click="fetch_contact_by('V')">V</div>
+                <div class="alpha_div" id="W" ng-click="fetch_contact_by('W')">W</div>
+                <div class="alpha_div" id="X" ng-click="fetch_contact_by('X')">X</div>
+                <div class="alpha_div" id="Y" ng-click="fetch_contact_by('Y')">Y</div>
+                <div class="alpha_div" id="Z" ng-click="fetch_contact_by('Z')">Z</div>
+                </div>-->
+                <div ng-show="contacts.length > 0" class="alph_main_div" style="border-bottom:solid 1px #666666;">
+                <label class="item item-input input-item-css">
+                    <!--<input class="inputcss" type="text" ng-model="searchopt"  required name="username" placeholder="B* or *.Microsoft.com" value="">-->
+                    <input class="inputcss" type="text" ng-model="searchopt"  required name="username" value="">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                </label>
+                <!--<span style="font-style:italic; color:#CCC;"><small>Keyword's :: B* or *.Microsoft.com</small></span>-->
+                <div class="SearchFilterOptionDiv" ng-init="schopt=1">
+                <input type="radio" class="checkboxFour" ng-model="schopt" value="1"><label>&nbsp; Search By Name</label>
+                <input type="radio" class="checkboxFour" ng-model="schopt" value="2"><label>&nbsp; Search By Email</label>
+                </div>
+                <div ng-show="searchresult.length > 0" class="ContactSearchError">
+                     Please type keyword...
+                    </div>
+                <button type="button" ng-click="filtercontacts(searchopt,schopt)" class="button button-block button-{{appColor}}">Search</button>
+                </div>
+                </form>
+                <form method="post" class="invtform" name="postForm" novalidate>
+                <div class="contact-table" style="margin-top:15px;">
+                 <div ng-show="contacts.length > 0" style="margin-bottom:10px;">
+                     <small ng-hide="searchfresult.length > 0" style="float:left;">{{contacts.length}} contact's found.</small>
+                     
+                     <a ng-hide="searchfresult.length > 0" ng-click="sendMessage()" style="float:right; padding:5px; background-color:#abd334; border-radius:10px; margin-bottom:5px; margin-right:5px; color:#fff;"> Send Invitation </a><br />
+                     
+                    </div>
+                
+                    <div class="row header" style="width:100% !important;">
+                        <div class="Import_Contact_name_head">Name</div>
+                        <div class="Import_Contact_email_head">Email</div>
+                        <div class="Import_Contact_group_head">Group</div>
+                        <div class="Import_Contact_radio_head">
+                        
+                        <div class="checkboxFour" style="margin-left:5px; float:left;">
+                               <input type="checkbox" ng-model="allval" id="checkbox_selectall" />
+                                <label for="checkbox_selectall"></label>
+                                </div>
+						</div>
+                        
+                    </div>
+                    <div ng-hide="contacts.length > 0" class="MobileContactLoading">
+                    <img src="img/loading1.gif" style="width:12px !important;" /> Loading.....
+                    
+                    <div ng-hide="fetchcont.length > 0" class="MobileContactLoading">
+                     <br />Please wait while fetching contacts...
+                    </div>
+                    
+                    </div>
+                    <div ng-show="searchfresult.length > 0" class="ContactSearchError">
+                     No result found.
+                    </div>
+                    
+                    <div id="importcontactlist" ng-repeat="data in contacts" style="width:100% !important;">
+                        <div class="row " on-hold='editInvitation(data.contact_id)'>
+                            <div class="Import_Contact_name_list MCDivColor">{{data.contact_name}}</div>
+                            <div class="Import_Contact_email_list MCDivColor">{{data.contact_email}}</div>
+                            <div class="Import_Contact_group_list MCDivColor">{{data.contact_group}}</div>
+                            <div class="Import_Contact_radio_list MCDivColor">
+                                <div class="checkboxFour" style="float:left; margin-right:5px;">
+                                    <input type="checkbox" ng-click="updateSelection($index, entities)" ng-true-value="{{data.contact_id}}" ng-false-value="" id="checkboxFourInput{{data.contact_id}}" ng-checked="allval" ng-model="contact_user[$index]" name="userid[]" value="{{data.contact_id}}"  value="on" class="importval" />
+                                    <label for="checkboxFourInput{{data.contact_id}}"></label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="padding"></div>
+                <!--<h4 ng-hide="contacts.length > 0" class="text-center">No record Found. </h4>-->
+                <div class="padding onebtncss" ng-show="contacts.length > 0" style="display:none;">
+                    <button type="button" class="button button-block button-{{appColor}}" ng-hide="searchfresult.length > 0" ng-click="sendMessage()"> Send </button>
+                </div>
+            </form>
+    </ion-content>
+</ion-view>
